@@ -31,10 +31,12 @@ const userSchema = mongoose.Schema(
       required: true,
       trim: true,
     },
-    workouts: {
-      type: Array,
-      default: [],
-    },
+    workouts: [
+      {
+        type: Array,
+      },
+    ],
+    tokens: [{ token: { type: String } }],
   },
   {
     timestamps: true,

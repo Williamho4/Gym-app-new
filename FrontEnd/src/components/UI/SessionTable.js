@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useUser } from '../../context/UserContext'
 
 function SessionTable({ title }) {
@@ -28,9 +28,7 @@ function SessionTable({ title }) {
   return (
     <div className="main-color w-[100%] h-[92%] rounded-md mx-2 mt-2 flex flex-col items-center p-4 shadow-xl">
       <h1 className="text-xl">
-        {userData && userData.user
-          ? `${userData.user.username}s ${title}`
-          : title}
+        {userData.user ? `${userData.user.username}'s ${title}` : title}
       </h1>
       <ul className="w-full mt-3 flex flex-wrap overflow-auto justify-between custom-scrollbar">
         {exercises.map((exercise) => (

@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+const User = require('../models/userModel')
 
 const verifyToken = async (req, res, next) => {
   try {
@@ -15,19 +16,24 @@ const verifyToken = async (req, res, next) => {
     }
 
     token = token.slice(7).trim()
-    const verified = jwt.verify(token, process.env.JWT_SECRET)
-    req.user = verified
+    const decoded = jwt.verify(token, process.env.JWT_SECRET)
+    const user = await User.findOne({ _id: decoded.id, 'tokens.token': token })
+
+    if (!user) return res.status(401).json({ message: 'Invalid token' })
+
+    req.user = user
+
+    const userObject = user.toObject()
+    delete userObject.password
 
     next()
   } catch (err) {
-    if (err.name === 'JsonWebTokenError') {
-      return res.status(401).json({ message: 'Invalid token' })
-    }
-    if (err.name === 'TokenExpiredError') {
-      return res.status(401).json({ message: 'Token has expired' })
-    }
-    console.error('JWT verification error:', err)
-    res.status(500).json({ message: 'Internal Server Error' })
+    res.status(401).json({
+      message:
+        err.name === 'TokenExpiredError'
+          ? 'Token has expired'
+          : 'Invalid token',
+    })
   }
 }
 

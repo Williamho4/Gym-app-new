@@ -14,7 +14,7 @@ function Login() {
     e.preventDefault()
 
     try {
-      const response = await fetch('http://localhost:4000/login', {
+      const response = await fetch('http://localhost:4000/user/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -32,6 +32,11 @@ function Login() {
         setUserData(data)
         setLoggedIn(true)
         console.log('Login successful:', data)
+
+        localStorage.setItem(
+          'token',
+          data.user.tokens[data.user.tokens.length - 1].token
+        )
 
         setError(null)
 

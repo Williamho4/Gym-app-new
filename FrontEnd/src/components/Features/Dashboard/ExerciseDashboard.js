@@ -10,7 +10,7 @@ function ExerciseDashboard() {
       <section className="justify-center w-full h-[44rem] md:mt-6 lg:mt-16 hidden lg:flex">
         <div className=" w-[50%] md:w-[50%] lg:w-[50%] xl:w-[40%] flex flex-col h-[99%]">
           <div className=" w-full h-[100%] flex items-center overflow-auto">
-            <SessionTable title={'Todays Session'}></SessionTable>
+            <SessionTable title={'Session Today'}></SessionTable>
           </div>
           <div className=" w-full h-[100%] flex items-center overflow-auto">
             <SessionTable title={'Next Session'}></SessionTable>

@@ -6,6 +6,7 @@ export const useExercises = () => useContext(ExercisesContext)
 
 export const ExercisesProvider = ({ children }) => {
   const [exercises, setExercises] = useState([])
+  const [plannedExercises, setPlannedExercises] = useState([])
 
   useEffect(() => {
     const fetchExercises = async () => {
@@ -17,7 +18,7 @@ export const ExercisesProvider = ({ children }) => {
           data.map(async (exercise) => {
             // Fetch the image Blob
             const imgResponse = await fetch(
-              `http://localhost:4000/exercise/${exercise._id}/image`
+              `http://localhost:4000/exercises/${exercise._id}/image`
             )
             const blob = await imgResponse.blob() // Get image as Blob
             const url = URL.createObjectURL(blob) // Create a URL for the Blob
@@ -35,7 +36,9 @@ export const ExercisesProvider = ({ children }) => {
   }, [exercises])
 
   return (
-    <ExercisesContext.Provider value={{ exercises }}>
+    <ExercisesContext.Provider
+      value={{ exercises, plannedExercises, setPlannedExercises }}
+    >
       {children}
     </ExercisesContext.Provider>
   )

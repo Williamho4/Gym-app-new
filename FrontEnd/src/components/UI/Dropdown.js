@@ -1,8 +1,15 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FaCaretUp, FaCaretDown } from 'react-icons/fa'
 
-function Dropdown({ type, dropdownList, onClick }) {
+function Dropdown({
+  type,
+  dropdownList,
+  onClick,
+  totalResults,
+  selectedFilter,
+}) {
   const [isOpen, setIsOpen] = useState(false)
+  const [hasBeenClicked, setHasBeenClicked] = useState(false)
 
   return (
     <div className="relative flex flex-col items-center w-[48%] h-auto rounded-xl">
@@ -10,7 +17,10 @@ function Dropdown({ type, dropdownList, onClick }) {
         onClick={() => setIsOpen((prev) => !prev)}
         className="bg-blue-400 p-3 w-full flex items-center justify-between  text-md rounded-lg tracking-wider border-4 border-transparent active:border-white duration-300 active:text-white"
       >
-        {type}
+        <div className="space-x-1 flex">
+          <div>{hasBeenClicked ? selectedFilter : type}</div>
+          <div className="text-red-600">{hasBeenClicked && totalResults}</div>
+        </div>
         {!isOpen ? (
           <FaCaretUp className="h-8" />
         ) : (
@@ -24,6 +34,7 @@ function Dropdown({ type, dropdownList, onClick }) {
                 onMouseDown={() => {
                   onClick(muscle)
                   setIsOpen(false)
+                  setHasBeenClicked(true)
                 }}
               >
                 <h3 className="tracking-widest">{muscle}</h3>

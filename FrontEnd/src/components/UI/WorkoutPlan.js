@@ -1,22 +1,74 @@
 import ExerciseCard from './ExerciseCard'
 import { useExercises } from '../../context/ExercisesContext'
 import { useState } from 'react'
+import { useUser } from '../../context/UserContext'
 
 function WorkoutPlan() {
   const { plannedExercises } = useExercises()
-  const [date, setDate] = useState()
+  const [date, setDate] = useState(null)
+  const { userData } = useUser()
+
+  const handleConfirmedWorkout = (e) => {
+    e.preventDefault()
+
+    const sendWorkoutToDatabase = async () => {
+      if (plannedExercises.length <= 0) {
+        return alert('You need to add an exercise')
+      }
+
+      if (!date) {
+        return alert('Please Provide Date')
+      }
+
+      const plannedExercisesNoImg = plannedExercises.map(
+        ({ exercise, sets }) => {
+          const { img, ...rest } = exercise
+          return { exercise: rest, sets }
+        }
+      )
+
+      const list = { plannedExercises: plannedExercisesNoImg, date }
+
+      try {
+        const response = await fetch('http://localhost:4000/exercises/upload', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${userData.user.tokens[0].token}`,
+          },
+          body: JSON.stringify({ workout: list }),
+        })
+
+        if (!response.ok) {
+          const errorMessage = await response.text()
+          throw new Error(
+            `HTTP error! Status: ${response.status} - ${errorMessage}`
+          )
+        }
+
+        const data = await response.json()
+        console.log(data)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+    sendWorkoutToDatabase()
+  }
 
   return (
     <div className="main-color min-h-[46rem] max-h-[46rem] rounded-xl w-[100%] md:w-[80%] lg:w-[70%] xl:w-[40%] m-3 flex flex-col items-center shadow-xl p-2.5 xl:p-6">
-      <div className="flex space-x-3">
-        <input
-          type="date"
-          className="px-1 rounded-md"
-          onChange={(e) => setDate(e.target.value)}
-        />
-        <button className="bg-blue-400 p-1 rounded-md text-lg">
-          Confirm Workout
-        </button>
+      <div>
+        <form className="flex space-x-3" onSubmit={handleConfirmedWorkout}>
+          <input
+            type="date"
+            className="px-1 rounded-md p-1"
+            onChange={(e) => setDate(e.target.value)}
+          />
+          <button className="bg-blue-400 rounded-md text-lg p-1" type="submit">
+            Confirm Workout
+          </button>
+        </form>
       </div>
       <ul className="w-full mt-3 flex flex-wrap overflow-auto justify-center custom-scrollbar">
         {plannedExercises.map((exercise) => (

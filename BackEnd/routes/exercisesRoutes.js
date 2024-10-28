@@ -49,6 +49,10 @@ router.post('/upload', verifyToken, async (req, res) => {
   }
 })
 
+router.get('/savedWorkouts', verifyToken, (req, res) => {
+  res.send(req.user.workouts)
+})
+
 router.get('/', async (req, res) => {
   try {
     const exercises = await Exercise.find()

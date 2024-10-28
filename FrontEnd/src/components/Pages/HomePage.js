@@ -5,7 +5,7 @@ function HomePage() {
   const { userData } = useUser()
   return (
     <>
-      {userData.user ? (
+      {userData?.user ? (
         <section>
           <ExerciseDashboard />
         </section>

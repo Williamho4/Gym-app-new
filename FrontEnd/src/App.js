@@ -1,6 +1,5 @@
 import './App.css'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import ExerciseDashboard from './components/Features/Dashboard/ExerciseDashboard'
 import Header from './components/UI/Header'
 import HomePage from './components/Pages/HomePage'
 import InputPage from './components/Pages/InputPage'

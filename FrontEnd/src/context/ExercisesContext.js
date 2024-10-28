@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
+import { useUser } from './UserContext'
 
 const ExercisesContext = createContext()
 
@@ -6,7 +7,34 @@ export const useExercises = () => useContext(ExercisesContext)
 
 export const ExercisesProvider = ({ children }) => {
   const [exercises, setExercises] = useState([])
+  const [userSavedWorkouts, setUserSavedWorkouts] = useState([])
   const [plannedExercises, setPlannedExercises] = useState([])
+
+  const { userData } = useUser()
+
+  useEffect(() => {
+    const fetchSavedWorkouts = async () => {
+      try {
+        const response = await fetch(
+          'http://localhost:4000/exercises/savedWorkouts',
+          {
+            headers: {
+              Authorization: `Bearer ${userData.user.tokens[0].token}`,
+            },
+          }
+        )
+
+        const data = await response.json()
+        setUserSavedWorkouts(data)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+    if (userData) {
+      fetchSavedWorkouts()
+    }
+  }, [userData])
 
   useEffect(() => {
     const fetchExercises = async () => {
@@ -37,7 +65,12 @@ export const ExercisesProvider = ({ children }) => {
 
   return (
     <ExercisesContext.Provider
-      value={{ exercises, plannedExercises, setPlannedExercises }}
+      value={{
+        exercises,
+        plannedExercises,
+        setPlannedExercises,
+        userSavedWorkouts,
+      }}
     >
       {children}
     </ExercisesContext.Provider>

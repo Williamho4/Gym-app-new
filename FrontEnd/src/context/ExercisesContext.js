@@ -61,7 +61,7 @@ export const ExercisesProvider = ({ children }) => {
     }
 
     fetchExercises()
-  }, [exercises])
+  }, [userData])
 
   return (
     <ExercisesContext.Provider

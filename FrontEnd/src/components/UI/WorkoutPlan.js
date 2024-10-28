@@ -4,9 +4,39 @@ import { useState } from 'react'
 import { useUser } from '../../context/UserContext'
 
 function WorkoutPlan() {
-  const { plannedExercises } = useExercises()
+  const { plannedExercises, setPlannedExercises } = useExercises()
   const [date, setDate] = useState(null)
-  const { userData } = useUser()
+  const { userData, setUserData } = useUser()
+
+  const refreshUserData = () => {
+    const token = localStorage.getItem('token')
+
+    if (token) {
+      const verifyToken = async () => {
+        try {
+          const response = await fetch(
+            'http://localhost:4000/user/verifyToken',
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
+
+          if (response.ok) {
+            const userData = await response.json()
+            setUserData(userData)
+          }
+        } catch (err) {
+          console.error('Token verification failed:', err)
+        }
+      }
+
+      verifyToken()
+    }
+  }
 
   const handleConfirmedWorkout = (e) => {
     e.preventDefault()
@@ -22,7 +52,7 @@ function WorkoutPlan() {
 
       const plannedExercisesNoImg = plannedExercises.map(
         ({ exercise, sets }) => {
-          const { img, ...rest } = exercise
+          const { img, imgUrl, ...rest } = exercise
           return { exercise: rest, sets }
         }
       )
@@ -46,8 +76,8 @@ function WorkoutPlan() {
           )
         }
 
-        const data = await response.json()
-        console.log(data)
+        setPlannedExercises([])
+        refreshUserData()
       } catch (err) {
         console.log(err)
       }

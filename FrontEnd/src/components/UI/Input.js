@@ -89,7 +89,7 @@ function Input() {
   }
 
   return (
-    <div className="main-color h-auto lg:max-h-[46rem] lg:min-h-[46rem] rounded-xl w-[100%] md:w-[80%] lg:w-[70%] xl:w-[40%] m-3 flex flex-col items-center shadow-xl">
+    <div className="main-color h-auto lg:max-h-[46rem] rounded-xl w-[100%] md:w-[80%] lg:w-[70%] xl:w-[40%] m-3 flex flex-col items-center shadow-xl">
       <h1 className="pt-4 text-lg tracking-wider">Plan Workout</h1>
       {!isLoading && (
         <div className="flex justify-between w-full pt-5 px-3 md:px-14">
@@ -109,15 +109,14 @@ function Input() {
         }`}
       >
         {isLoading && (
-          <h1 className="text-4xl mt-[10rem] h-[20rem]">
-            Loading Exercises....
-          </h1>
+          <h1 className="text-4xl mt-[35%] h-[20rem]">Loading Exercises....</h1>
         )}
         {shownExercises.length === 0 && !isLoading && (
-          <h1 className="text-3xl mt-5">No Exercises Found</h1>
+          <h1 className="text-3xl mt-20 mb-10">No Exercises Found</h1>
         )}
-        {shownExercises.map((exercise) => (
+        {shownExercises.map((exercise, index) => (
           <li
+            key={index}
             className={`secondary-color h-[5rem] w-[46%] md:w-[44%] xl:w-[46%] rounded-md m-2 mb-3 flex pt-2 pb-2 pl-2 shadow-xl cursor-pointer ${
               selectedExercise?.name === exercise.name && 'bg-red-600'
             }`}
@@ -137,7 +136,7 @@ function Input() {
         ))}
       </ul>
       {selectedExercise && (
-        <div className="flex flex-col items-center lg:flex-row md:justify-center lg:space-x-4 2xl:space-x-20 py-5 md:py-10 w-full lg:max-w-[90%]">
+        <div className="flex flex-col items-center lg:flex-row md:justify-center lg:space-x-4 2xl:space-x-20 py-4 md:py-10 w-full lg:max-w-[90%]">
           {' '}
           <div className="h-auto mb-8 space-y-4 flex flex-col items-start">
             {!setCountConfirmed && !isLoading && selectedExercise && (

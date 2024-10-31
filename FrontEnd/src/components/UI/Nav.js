@@ -10,9 +10,27 @@ const NavLinks = () => {
     <>
       <NavLink to="/">Home</NavLink>
       <NavLink to="/workoutPlanner">Workout Planner</NavLink>
-      {!loggedIn && <NavLink to="/login">Login</NavLink>}
+      {!loggedIn ? (
+        <NavLink to="/login">Login</NavLink>
+      ) : (
+        <NavLink onClick={logoutUser}>LogOut</NavLink>
+      )}
     </>
   )
+}
+
+const logoutUser = async () => {
+  const token = localStorage.getItem('token')
+
+  await fetch('http://localhost:4000/user/logout', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  localStorage.removeItem('token')
+
+  window.location.href = '/login'
 }
 
 const Nav = () => {
@@ -25,7 +43,7 @@ const Nav = () => {
   return (
     <>
       <nav className="w-1/5 light-text">
-        <div className="hidden lg:flex w-full justify-evenly">
+        <div className="hidden lg:flex w-full justify-end space-x-5">
           <NavLinks></NavLinks>
         </div>
         <div className="lg:hidden flex justify-end">

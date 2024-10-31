@@ -28,8 +28,9 @@ function Dropdown({
         )}
         {isOpen && (
           <div className="bg-blue-400 absolute top-20 flex flex-col items-start rounded-lg p-2 w-full left-0">
-            {dropdownList.map((muscle, i) => (
+            {dropdownList.map((muscle, index) => (
               <div
+                key={index}
                 className="flex w-full justify-between hover:bg-blue-300 cursor-pointer rounded-md border-l-transparent p-2 items-center"
                 onMouseDown={() => {
                   onClick(muscle)

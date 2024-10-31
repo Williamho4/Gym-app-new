@@ -7,6 +7,11 @@ function WorkoutPlan() {
   const { plannedExercises, setPlannedExercises } = useExercises()
   const [date, setDate] = useState(null)
   const { userData, setUserData } = useUser()
+  const { userSavedWorkouts } = useExercises()
+
+  const duplicateWorkout = userSavedWorkouts.some(
+    (workout) => workout.date === date
+  )
 
   const refreshUserData = () => {
     const token = localStorage.getItem('token')
@@ -48,6 +53,14 @@ function WorkoutPlan() {
 
       if (!date) {
         return alert('Please Provide Date')
+      }
+
+      if (date < new Date().toLocaleDateString()) {
+        return alert('Date has already passed')
+      }
+
+      if (duplicateWorkout) {
+        return alert('Already have workout on this date')
       }
 
       const plannedExercisesNoImg = plannedExercises.map(
@@ -101,8 +114,9 @@ function WorkoutPlan() {
         </form>
       </div>
       <ul className="w-full mt-3 flex flex-wrap overflow-auto justify-center custom-scrollbar">
-        {plannedExercises.map((exercise) => (
+        {plannedExercises.map((exercise, index) => (
           <ExerciseCard
+            key={index}
             sets={exercise.sets}
             selectedExercise={exercise.exercise}
           ></ExerciseCard>

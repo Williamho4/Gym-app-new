@@ -33,6 +33,20 @@ router.post('/login', async (req, res) => {
   }
 })
 
+router.get('/logout', verifyToken, async (req, res) => {
+  try {
+    req.user.tokens = req.user.tokens.filter((token) => {
+      return token.token !== req.token
+    })
+
+    await req.user.save()
+
+    res.send()
+  } catch (err) {
+    res.status(500).send()
+  }
+})
+
 router.post('/verifyToken', verifyToken, async (req, res) => {
   res.send({ user: req.user })
 })

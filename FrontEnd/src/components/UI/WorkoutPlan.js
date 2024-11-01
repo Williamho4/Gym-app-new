@@ -65,9 +65,9 @@ function WorkoutPlan() {
       }
 
       const plannedExercisesNoImg = plannedExercises.map(
-        ({ exercise, sets }) => {
+        ({ exercise, sets, id }) => {
           const { img, imgUrl, ...rest } = exercise
-          return { exercise: rest, sets }
+          return { exercise: rest, sets, id }
         }
       )
 

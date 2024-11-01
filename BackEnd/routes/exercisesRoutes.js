@@ -53,6 +53,31 @@ router.get('/savedWorkouts', verifyToken, (req, res) => {
   res.send(req.user.workouts)
 })
 
+router.patch('/updateWorkouts', verifyToken, async (req, res) => {
+  try {
+    const { workouts } = req.body
+
+    // Validate the workouts data (basic validation example)
+    if (!Array.isArray(workouts)) {
+      return res.status(400).json({ message: 'Workouts must be an array.' })
+    }
+
+    // Assign the new workouts to the user's workouts
+    req.user.workouts = workouts
+
+    // Save the updated user object
+    await req.user.save()
+
+    // Send back the updated workouts with a 200 OK status
+    return res.status(200).json(req.user.workouts)
+  } catch (error) {
+    console.error('Error updating workouts:', error) // Log the error for debugging
+    return res
+      .status(500)
+      .json({ message: 'An error occurred while updating workouts.' })
+  }
+})
+
 router.get('/', async (req, res) => {
   try {
     const exercises = await Exercise.find()

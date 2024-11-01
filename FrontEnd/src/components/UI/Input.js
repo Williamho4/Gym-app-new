@@ -82,6 +82,7 @@ function Input() {
       {
         exercise: selectedExercise,
         sets: sets,
+        id: uuidv4(),
       },
     ])
 

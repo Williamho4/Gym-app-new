@@ -1,4 +1,4 @@
-import React from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 function WeeklySessions({ workouts }) {
   const today = new Date()
@@ -7,13 +7,15 @@ function WeeklySessions({ workouts }) {
   // Calculate the offset to get to Monday
   const mondayOffset = currentDay === 0 ? -6 : 1 - currentDay // If today is Sunday, go back 6 days, otherwise adjust to Monday
 
-  // Get the start of the week (Monday)
+  // Get the start of the week (Monday at 00:00:00)
   const startOfWeek = new Date(today)
-  startOfWeek.setDate(today.getDate() + mondayOffset) // Set to Monday
+  startOfWeek.setDate(today.getDate() + mondayOffset)
+  startOfWeek.setHours(0, 0, 0, 0) // Reset time to start of the day
 
-  // Get the end of the week (Sunday)
-  const endOfWeek = new Date(today)
-  endOfWeek.setDate(startOfWeek.getDate() + 6) // Set to the following Sunday
+  // Get the end of the week (Sunday at 23:59:59)
+  const endOfWeek = new Date(startOfWeek)
+  endOfWeek.setDate(startOfWeek.getDate() + 6)
+  endOfWeek.setHours(23, 59, 59, 999) // Set to end of the day
 
   // Filter workouts for this week
   const thisWeeksWorkouts = workouts.filter((workout) => {
@@ -47,23 +49,21 @@ function WeeklySessions({ workouts }) {
   thisWeeksWorkouts.sort((a, b) => new Date(a.date) - new Date(b.date))
 
   return (
-    <div className="secondary-color w-[96%] h-[95%] rounded-md flex flex-col pb-2 shadow-xl">
-      <h1 className="text-center p-4 pb-2 text-xl md:text-lg light-text">
-        This Week
-      </h1>
-      <ul className="m-1 md:mr-2 space-y-3 overflow-auto p-2 xl:pl-4 custom-scrollbar scrollbar-thumb-primary">
-        {thisWeeksWorkouts.map((workout, index) => (
+    <div className="main-color w-[85%] md:w-[100%] h-[95%] rounded-md flex flex-col pb-2 shadow-xl">
+      <h1 className="text-center p-4 pb-2 text-xl">This Week</h1>
+      <ul className="m-1 md:mr-2 space-y-3 overflow-auto p-2 xl:pl-4 custom-scrollbar">
+        {thisWeeksWorkouts.map((workout) => (
           <li
-            key={workout.date}
-            className="main-color rounded-md shadow-xl flex flex-col items-center p-4 pb-6 px-4 overflow-auto h-auto min-h-[15rem]"
+            key={workout.id}
+            className="main-color border-jetBlack border-[1px] rounded-md shadow-xl flex flex-col items-center p-4 pb-6 px-4 overflow-auto h-auto min-h-[15rem]"
           >
             <h1 className="text-2xl mb-3">{workout.day}</h1>
             <div className="flex flex-wrap gap-5 justify-center w-full">
               <ul className="w-full  mt-3 flex flex-wrap overflow-auto justify-center custom-scrollbar">
-                {workout.plannedExercises.map((exercise, index) => (
+                {workout.plannedExercises.map((exercise) => (
                   <li
-                    key={index}
-                    className="secondary-color h-[10rem] w-[90%] lg:w-[42%] xl:w-[42%] rounded-md m-2 mb-3 flex pt-2 pb-2 pl-2 shadow-xl mr-3.5"
+                    key={uuidv4()}
+                    className="secondary-color h-[10rem] w-[90%] 2xl:w-[42%] rounded-md m-2 mb-3 flex pt-2 pb-2 pl-2 shadow-xl mr-3.5"
                   >
                     <>
                       <img
@@ -82,9 +82,9 @@ function WeeklySessions({ workouts }) {
                           )}
                           <div className="flex space-x-3 w-full justify-center items-center flex-wrap px-3">
                             {exercise.sets.length > 0 &&
-                              exercise.sets.map((set, index) => (
+                              exercise.sets.map((set) => (
                                 <div
-                                  key={index}
+                                  key={set.id}
                                   className="flex space-x-1 w-auto justify-center"
                                 >
                                   <p className="text-blue-400">{set.reps}</p>{' '}

@@ -2,6 +2,7 @@ import ExerciseCard from './ExerciseCard'
 import { useExercises } from '../../context/ExercisesContext'
 import { useState } from 'react'
 import { useUser } from '../../context/UserContext'
+import { v4 as uuidv4 } from 'uuid'
 
 function WorkoutPlan() {
   const { plannedExercises, setPlannedExercises } = useExercises()
@@ -70,7 +71,11 @@ function WorkoutPlan() {
         }
       )
 
-      const list = { plannedExercises: plannedExercisesNoImg, date }
+      const list = {
+        plannedExercises: plannedExercisesNoImg,
+        date,
+        id: uuidv4(),
+      }
 
       try {
         const response = await fetch('http://localhost:4000/exercises/upload', {
@@ -114,9 +119,9 @@ function WorkoutPlan() {
         </form>
       </div>
       <ul className="w-full mt-3 flex flex-wrap overflow-auto justify-center custom-scrollbar">
-        {plannedExercises.map((exercise, index) => (
+        {plannedExercises.map((exercise) => (
           <ExerciseCard
-            key={index}
+            key={exercise.exercise._id}
             sets={exercise.sets}
             selectedExercise={exercise.exercise}
           ></ExerciseCard>

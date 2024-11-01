@@ -9,6 +9,7 @@ export const ExercisesProvider = ({ children }) => {
   const [exercises, setExercises] = useState([])
   const [userSavedWorkouts, setUserSavedWorkouts] = useState([])
   const [plannedExercises, setPlannedExercises] = useState([])
+  const [loadingWorkouts, setLoadingWorkouts] = useState(true)
 
   const { userData } = useUser()
 
@@ -26,6 +27,7 @@ export const ExercisesProvider = ({ children }) => {
 
         const data = await response.json()
         setUserSavedWorkouts(data)
+        setLoadingWorkouts(false)
       } catch (err) {
         console.log(err)
       }
@@ -70,6 +72,7 @@ export const ExercisesProvider = ({ children }) => {
         plannedExercises,
         setPlannedExercises,
         userSavedWorkouts,
+        loadingWorkouts,
       }}
     >
       {children}

@@ -31,7 +31,6 @@ function Login() {
 
         setUserData(data)
         setLoggedIn(true)
-        console.log('Login successful:', data)
 
         localStorage.setItem(
           'token',

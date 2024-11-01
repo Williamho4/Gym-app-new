@@ -1,6 +1,7 @@
-import Dropdown from './Dropdown'
 import { useExercises } from '../../context/ExercisesContext'
 import { useEffect, useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
+import Dropdown from './Dropdown'
 import ExerciseCard from './ExerciseCard'
 
 function Input() {
@@ -56,6 +57,25 @@ function Input() {
 
   const handleConfirmedExercise = (e) => {
     e.preventDefault()
+
+    if (sets.length <= 0) {
+      return alert('Fill in all sets')
+    }
+
+    for (let i = 0; i < sets.length; i++) {
+      if (sets[i] === undefined) {
+        return alert('Please fill in all sets.')
+      }
+    }
+
+    if (
+      sets.every((set) => set.reps !== undefined && set.weight !== undefined)
+    ) {
+    } else {
+      return alert('Fill in all sets')
+    }
+
+    sets.map((set) => (set.id = uuidv4()))
 
     setPlannedExercises((prev) => [
       ...prev,
@@ -114,10 +134,10 @@ function Input() {
         {shownExercises.length === 0 && !isLoading && (
           <h1 className="text-3xl mt-20 mb-10">No Exercises Found</h1>
         )}
-        {shownExercises.map((exercise, index) => (
+        {shownExercises.map((exercise) => (
           <li
-            key={index}
-            className={`secondary-color h-[5rem] w-[46%] md:w-[44%] xl:w-[46%] rounded-md m-2 mb-3 flex pt-2 pb-2 pl-2 shadow-xl cursor-pointer ${
+            key={exercise._id}
+            className={`secondary-color h-[5rem] w-[42%] md:w-[44%] xl:w-[46%] rounded-md m-2 mb-3 flex pt-2 pb-2 pl-2 shadow-xl cursor-pointer ${
               selectedExercise?.name === exercise.name && 'bg-red-600'
             }`}
             onClick={() => handleSelect(exercise)}

@@ -1,3 +1,4 @@
+import { Children } from 'react'
 import { useUser } from '../../context/UserContext'
 import { useNavigate } from 'react-router-dom'
 
@@ -8,8 +9,8 @@ function TodaysSession({ workouts, date, day }) {
   const todaysWorkout = workouts.filter((workout) => workout.date === date)
 
   return (
-    <div>
-      <div className="main-color w-[100%] max-h-[52rem] md:h-[23.25rem] rounded-md flex flex-col items-center p-4 shadow-xl">
+    <div className="flex justify-center">
+      <div className="main-color w-[90%] max-h-[44rem] md:h-[23.25rem] rounded-md flex flex-col items-center p-4 shadow-xl">
         <h1 className="text-xl">
           {userData?.user
             ? `${
@@ -18,10 +19,10 @@ function TodaysSession({ workouts, date, day }) {
                   : `${userData.user.username}'s Next workout`
               }`
             : 'Workout'}
-          {day === 'Today' && (
+          {day === 'Today' && todaysWorkout.length > 0 && (
             <button
               className="bg-red-600 rounded-md text-lg px-1 ml-2"
-              onClick={() => Navigate('/workoutPlanner')}
+              onClick={() => Navigate(`/workout?id=${todaysWorkout[0].id}`)}
             >
               Start Workout
             </button>
@@ -31,7 +32,7 @@ function TodaysSession({ workouts, date, day }) {
           {todaysWorkout[0]?.plannedExercises.map((exercise, index) => (
             <li
               key={index}
-              className="secondary-color h-[10rem] w-[90%] lg:w-[42%] xl:w-[42%] rounded-md m-2 mb-3 flex pt-2 pb-2 pl-2 shadow-xl mr-3.5"
+              className="secondary-color h-[10rem] w-[90%] 2xl:w-[42%]  rounded-md m-2 mb-3 flex pt-2 pb-2 pl-2 shadow-xl mr-3.5"
             >
               <>
                 <img

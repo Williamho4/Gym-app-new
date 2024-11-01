@@ -10,7 +10,7 @@ function TodaysSession({ workouts, date, day }) {
 
   return (
     <div className="flex justify-center">
-      <div className="main-color w-[90%] max-h-[44rem] md:h-[23.25rem] rounded-md flex flex-col items-center p-4 shadow-xl">
+      <div className="main-color w-[90%] max-h-[44rem] md:h-[20rem] rounded-md flex flex-col items-center p-4 shadow-xl">
         <h1 className="text-xl">
           {userData?.user
             ? `${

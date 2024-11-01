@@ -49,7 +49,7 @@ function WeeklySessions({ workouts }) {
   thisWeeksWorkouts.sort((a, b) => new Date(a.date) - new Date(b.date))
 
   return (
-    <div className="main-color w-[85%] md:w-[100%] h-[95%] rounded-md flex flex-col pb-2 shadow-xl">
+    <div className="main-color w-[85%] md:w-[100%] h-[41rem] rounded-md flex flex-col pb-2 shadow-xl">
       <h1 className="text-center p-4 pb-2 text-xl">This Week</h1>
       <ul className="m-1 md:mr-2 space-y-3 overflow-auto p-2 xl:pl-4 custom-scrollbar">
         {thisWeeksWorkouts.map((workout) => (

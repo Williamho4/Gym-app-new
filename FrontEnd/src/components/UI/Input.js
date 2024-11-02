@@ -90,7 +90,7 @@ function Input() {
   console.log(plannedExercises)
 
   return (
-    <div className="main-color h-auto lg:max-h-[42rem] rounded-xl w-[100%] md:w-[80%] lg:w-[70%] xl:w-[40%] m-3 flex flex-col items-center shadow-xl">
+    <div className="main-color h-auto lg:max-h-[42rem] rounded-xl w-[100%] md:w-[80%] lg:w-[70%] xl:w-[40%]  flex flex-col items-center shadow-xl">
       <h1 className="pt-4 text-lg tracking-wider">Plan Workout</h1>
       {!isLoading && (
         <div className="flex justify-between w-full pt-5 px-3 md:px-14">

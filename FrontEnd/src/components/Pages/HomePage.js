@@ -9,7 +9,7 @@ function HomePage() {
   return (
     <>
       {userData?.user ? (
-        <section>
+        <section className="flex items-center justify-center min-h-[calc(100vh-4rem)] mt-2 md:mt-0">
           <ExerciseDashboard workouts={userSavedWorkouts} />
         </section>
       ) : (

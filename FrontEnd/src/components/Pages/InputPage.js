@@ -3,7 +3,7 @@ import WorkoutPlan from '../UI/WorkoutPlan'
 
 function InputPage() {
   return (
-    <div className="flex flex-col lg:flex-row justify-center mt-10 items-center mx-6">
+    <div className="flex flex-col lg:flex-row m-2 items-center justify-center min-h-[calc(100vh-4rem)] lg:space-x-4 space-y-6 lg:space-y-0">
       <Input></Input>
       <WorkoutPlan></WorkoutPlan>
     </div>

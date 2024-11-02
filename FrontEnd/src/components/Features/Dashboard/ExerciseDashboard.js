@@ -22,7 +22,7 @@ function ExerciseDashboard({ workouts }) {
 
   return (
     <div
-      className="flex flex-col justify-center items-center w-full mt-8 md:h-[50rem] md:flex-row 
+      className="flex flex-col justify-center items-center w-full md:h-[50rem] md:flex-row 
      md:space-x-[-1rem] lg:space-x-[-1.5rem] "
     >
       <section className="w-[100%] md:w-[50%] lg:w-[46%] xl:w-[40%] h-auto space-y-10 md:space-y-4 px-3">

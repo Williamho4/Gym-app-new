@@ -105,7 +105,7 @@ function WorkoutPlan() {
   }
 
   return (
-    <div className="main-color min-h-[46rem] max-h-[46rem] rounded-xl w-[100%] md:w-[80%] lg:w-[70%] xl:w-[40%] m-3 flex flex-col items-center shadow-xl p-2.5 xl:p-6">
+    <div className="main-color min-h-[42rem] max-h-[42rem] rounded-xl w-[100%] md:w-[80%] lg:w-[70%] xl:w-[40%] m-3 flex flex-col items-center shadow-xl p-2.5 xl:p-6">
       <div>
         <form className="flex space-x-3" onSubmit={handleConfirmedWorkout}>
           <input

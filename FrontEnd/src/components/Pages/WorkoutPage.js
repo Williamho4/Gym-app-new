@@ -2,7 +2,7 @@ import { useSearchParams } from 'react-router-dom'
 import { useExercises } from '../../context/ExercisesContext'
 import { useUser } from '../../context/UserContext'
 import { useEffect, useState } from 'react'
-import { HiArrowUturnLeft } from 'react-icons/hi2'
+import { X } from 'lucide-react'
 
 function WorkoutPage() {
   const [searchParams] = useSearchParams()
@@ -154,10 +154,10 @@ function WorkoutPage() {
           >
             <div className="w-full h-full">
               <>
-                <HiArrowUturnLeft
+                <X
                   className="fixed top-3 right-3 light-text cursor-pointer"
                   onClick={() => setWorkoutModal(!workoutModal)}
-                ></HiArrowUturnLeft>
+                />
                 <p className="text-center text-2xl light-text mb-[5%] tracking-wider">
                   {selectedExercise[0].exercise.name}
                 </p>

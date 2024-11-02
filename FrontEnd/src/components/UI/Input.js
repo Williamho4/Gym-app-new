@@ -90,7 +90,7 @@ function Input() {
   console.log(plannedExercises)
 
   return (
-    <div className="main-color h-auto lg:max-h-[46rem] rounded-xl w-[100%] md:w-[80%] lg:w-[70%] xl:w-[40%] m-3 flex flex-col items-center shadow-xl">
+    <div className="main-color h-auto lg:max-h-[42rem] rounded-xl w-[100%] md:w-[80%] lg:w-[70%] xl:w-[40%] m-3 flex flex-col items-center shadow-xl">
       <h1 className="pt-4 text-lg tracking-wider">Plan Workout</h1>
       {!isLoading && (
         <div className="flex justify-between w-full pt-5 px-3 md:px-14">
@@ -137,7 +137,7 @@ function Input() {
         ))}
       </ul>
       {selectedExercise && (
-        <div className="flex flex-col items-center lg:flex-row md:justify-center lg:space-x-4 2xl:space-x-20 py-4 md:py-10 w-full lg:max-w-[90%]">
+        <div className="flex flex-col items-center lg:flex-row md:justify-center lg:space-x-4 2xl:space-x-20 py-2 w-full lg:max-w-[90%]">
           {' '}
           <div className="h-auto mb-8 space-y-4 flex flex-col items-start">
             {!isLoading && selectedExercise && (

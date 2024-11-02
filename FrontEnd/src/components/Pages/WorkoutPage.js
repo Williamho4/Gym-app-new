@@ -90,7 +90,7 @@ function WorkoutPage() {
 
   return (
     <>
-      <section className="flex items-center justify-center min-h-[calc(100vh-4rem)]">
+      <section className="flex items-center justify-center min-h-[calc(100vh-4rem)] mt-2 md:mt-0">
         <div className="main-color w-[90%] md:w-[80%] lg:w-[70%] xl:w-[55%] min-h-[30rem] max-h-[50rem] rounded-md flex flex-col items-center justify-center p-4 shadow-xl">
           <h1 className="flex space-x-2 text-2xl">
             <p>{selectedWorkout[0]?.date}</p>

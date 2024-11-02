@@ -56,9 +56,9 @@ function TodaysSession({ workouts, date, day }) {
                             key={index}
                             className="flex space-x-1 w-auto justify-center"
                           >
-                            <p className="text-blue-400">{set.reps}</p>{' '}
+                            <p className="text-blue-400">{set.reps}</p>
                             <p className="text-red-600">{set.weight}</p>
-                            {set.weight && <p className="light-text">KG</p>}
+                            <p className="light-text">KG</p>
                           </div>
                         ))}
                     </div>

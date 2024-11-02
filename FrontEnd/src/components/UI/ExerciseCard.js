@@ -12,22 +12,20 @@ function ExerciseCard({ sets, selectedExercise }) {
           <p className="text-center light-text text-base xl:text-base mb-1 tracking-wider">
             {selectedExercise.name}
           </p>
-          <div className="flex flex-col items-center overflow-auto custom-scrollbar">
+          <div className="flex flex-col items-center overflow-auto custom-scrollbar scrollbar-thumb-white">
             {sets.length > 0 && <p className="light-text">Sets</p>}
             <div className="flex space-x-3 w-full justify-center items-center flex-wrap px-3">
               {sets.length > 0 &&
-                sets
-                  .filter((set) => set)
-                  .map((set, index) => (
-                    <div
-                      key={index}
-                      className="flex space-x-1 w-auto justify-center"
-                    >
-                      <p className="text-blue-400">{set.reps}</p>{' '}
-                      <p className="text-red-600">{set.weight}</p>
-                      {set.weight && <p className="light-text">KG</p>}
-                    </div>
-                  ))}
+                sets.map((set, index) => (
+                  <div
+                    key={index}
+                    className="flex space-x-1 w-auto justify-center"
+                  >
+                    <p className="text-blue-400">{set.reps}</p>
+                    <p className="text-red-600">{set.weight}</p>
+                    <p className="light-text">KG</p>
+                  </div>
+                ))}
             </div>
           </div>
         </div>

@@ -12,9 +12,8 @@ function Input() {
   const [hasLoaded, setHasLoaded] = useState(false)
 
   const [selectedMuscleFilter, setSelectedMuscleFilter] = useState(null)
-  const [setCount, setSetCount] = useState(1)
-  const [sets, setSets] = useState([])
-  const [setCountConfirmed, setSetCountConfirmed] = useState(false)
+  const [setCount, setSetCount] = useState(0)
+  const [setsState, setSetsState] = useState([])
 
   useEffect(() => {
     if (exercises.length > 0 && !hasLoaded) {
@@ -37,10 +36,6 @@ function Input() {
 
   const sortBy = ['Popular', 'Favorites']
 
-  const handleSelect = (e) => {
-    setSelectedExercise(e)
-  }
-
   const handleMuscleFilter = (muscle) => {
     if (muscle === 'All') {
       setSelectedMuscleFilter('All')
@@ -55,59 +50,44 @@ function Input() {
     setShownExercises(filteredExercises)
   }
 
+  const handleSelect = (e) => {
+    setSelectedExercise(e)
+  }
+
+  const handleChange = (e) => {
+    setSetCount(parseInt(e.target.value))
+  }
+
+  useEffect(() => {
+    const sets = Array.from({ length: setCount }, () => ({
+      reps: 0,
+      weight: 0,
+    }))
+    sets.map((set) => (set.id = uuidv4()))
+    setSetsState(sets)
+  }, [setCount])
+
   const handleConfirmedExercise = (e) => {
     e.preventDefault()
 
-    if (sets.length <= 0) {
-      return alert('Fill in all sets')
+    if (setsState.length <= 0 || setsState.length > 4) {
+      return alert('Sets must be between 1 and 4')
     }
-
-    for (let i = 0; i < sets.length; i++) {
-      if (sets[i] === undefined) {
-        return alert('Please fill in all sets.')
-      }
-    }
-
-    if (
-      sets.every((set) => set.reps !== undefined && set.weight !== undefined)
-    ) {
-    } else {
-      return alert('Fill in all sets')
-    }
-
-    sets.map((set) => (set.id = uuidv4()))
 
     setPlannedExercises((prev) => [
       ...prev,
       {
         exercise: selectedExercise,
-        sets: sets,
+        sets: setsState,
         id: uuidv4(),
       },
     ])
 
-    setSets([])
-
+    setSetCount(0)
     setSelectedExercise(null)
-    setSetCountConfirmed(false)
   }
 
-  const confirmSetCount = (e) => {
-    e.preventDefault()
-    setSetCountConfirmed(true)
-  }
-
-  const handleSetRepChange = (index, type, value) => {
-    value = parseInt(value) || 0
-    if (value < 0) value = 0
-
-    const newSets = [...sets]
-    newSets[index] = {
-      ...newSets[index],
-      [type]: parseInt(value),
-    }
-    setSets(newSets)
-  }
+  console.log(plannedExercises)
 
   return (
     <div className="main-color h-auto lg:max-h-[46rem] rounded-xl w-[100%] md:w-[80%] lg:w-[70%] xl:w-[40%] m-3 flex flex-col items-center shadow-xl">
@@ -160,19 +140,19 @@ function Input() {
         <div className="flex flex-col items-center lg:flex-row md:justify-center lg:space-x-4 2xl:space-x-20 py-4 md:py-10 w-full lg:max-w-[90%]">
           {' '}
           <div className="h-auto mb-8 space-y-4 flex flex-col items-start">
-            {!setCountConfirmed && !isLoading && selectedExercise && (
+            {!isLoading && selectedExercise && (
               <form
                 className="flex items-center justify-center w-full space-x-3 mr-[4rem] mt-9 md:mt-0"
-                onSubmit={confirmSetCount}
+                onSubmit={handleConfirmedExercise}
               >
                 <label>Number Of Sets</label>
                 <div className="flex space-x-3">
                   <input
                     className="px-2 rounded-md"
                     type="number"
-                    min="1"
+                    min="0"
                     max="4"
-                    onChange={(e) => setSetCount(parseInt(e.target.value))}
+                    onChange={handleChange}
                   />
                   <button
                     className="bg-blue-400 px-2 py-1 rounded-md"
@@ -183,64 +163,10 @@ function Input() {
                 </div>
               </form>
             )}
-            {setCountConfirmed && (
-              <form className="flex flex-col space-y-2">
-                {Array.from({ length: setCount }).map((set, index) => (
-                  <div
-                    className="flex w-full space-x-1 justify-evenly"
-                    key={index}
-                  >
-                    <div className="flex flex-col items-center">
-                      {index === 0 && <label htmlFor="">Reps</label>}
-                      <input
-                        className="w-[100%] rounded-md p-1 px-8 pl-10 text-center"
-                        type="number"
-                        min="1"
-                        max="30"
-                        placeholder={`Set${index + 1}`}
-                        onChange={(e) =>
-                          handleSetRepChange(index, 'reps', e.target.value)
-                        }
-                      />
-                    </div>
-                    <div className="flex flex-col items-center">
-                      {index === 0 && <label htmlFor="">Weight</label>}
-                      <input
-                        className="w-[100%] rounded-md p-1 px-7 pl-10 text-center"
-                        type="number"
-                        min="1"
-                        max="500"
-                        placeholder={`Set${index + 1}`}
-                        onChange={(e) =>
-                          handleSetRepChange(index, 'weight', e.target.value)
-                        }
-                      />
-                    </div>
-                  </div>
-                ))}
-                <div className="flex space-x-1 w-full">
-                  <button
-                    className="w-[50%] rounded-md p-1 bg-blue-400"
-                    onClick={handleConfirmedExercise}
-                  >
-                    Confirm Exercise
-                  </button>
-                  <button
-                    className="w-[50%] rounded-md p-1 bg-blue-400"
-                    onClick={() => {
-                      setSetCountConfirmed(false)
-                      setSets([])
-                    }}
-                  >
-                    Change Number Of Sets
-                  </button>
-                </div>
-              </form>
-            )}
           </div>
           {selectedExercise && (
             <ExerciseCard
-              sets={sets}
+              sets={setsState}
               selectedExercise={selectedExercise}
             ></ExerciseCard>
           )}

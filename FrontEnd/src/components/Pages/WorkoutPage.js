@@ -2,6 +2,7 @@ import { useSearchParams } from 'react-router-dom'
 import { useExercises } from '../../context/ExercisesContext'
 import { useUser } from '../../context/UserContext'
 import { useEffect, useState } from 'react'
+import { HiArrowUturnLeft } from 'react-icons/hi2'
 
 function WorkoutPage() {
   const [searchParams] = useSearchParams()
@@ -54,7 +55,6 @@ function WorkoutPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log(repsInput, weightInput)
 
     selectedSet[0].reps = repsInput
     selectedSet[0].weight = weightInput
@@ -81,18 +81,21 @@ function WorkoutPage() {
       if (!response.ok) {
         throw new Error(`Error: ${response.status} - ${response.statusText}`)
       }
-
-      const data = await response.json()
-      console.log(data)
     } catch (err) {
       console.log(err)
     }
+
+    setSelectedSet([])
   }
 
   return (
     <>
       <section className="w-[100%] flex justify-center items-center h-[50rem] ">
-        <div className="main-color w-[90%] md:w-[80%] lg:w-[70%] xl:w-[55%] min-h-[30rem] max-h-[50rem] rounded-md flex flex-col items-center justify-between p-4 shadow-xl">
+        <div className="main-color w-[90%] md:w-[80%] lg:w-[70%] xl:w-[55%] min-h-[30rem] max-h-[50rem] rounded-md flex flex-col items-center justify-center p-4 shadow-xl">
+          <h1 className="flex space-x-2 text-2xl">
+            <p>{selectedWorkout[0]?.date}</p>
+            <p>{selectedWorkout[0]?.day}</p>
+          </h1>
           <ul className="w-full  mt-3 flex flex-wrap overflow-auto justify-center custom-scrollbar">
             {selectedWorkout[0]?.plannedExercises.map((exercise) => (
               <li
@@ -122,9 +125,9 @@ function WorkoutPage() {
                             key={set.id}
                             className="flex space-x-1 w-auto justify-center"
                           >
-                            <p className="text-blue-400">{set.reps}</p>{' '}
+                            <p className="text-blue-400">{set.reps}</p>
                             <p className="text-red-600">{set.weight}</p>
-                            {set.weight && <p className="light-text">KG</p>}
+                            <p className="light-text">KG</p>
                           </div>
                         ))}
                       </div>
@@ -145,73 +148,88 @@ function WorkoutPage() {
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className={`bg-white rounded-xl shadow p-6 transition-all ${
+            className={`secondary-color rounded-xl shadow p-6 transition-all mx-2 ${
               workoutModal ? 'scale-100' : 'scale-125 opacity-0'
             }`}
           >
-            <div className="secondary-color h-[20rem]  w-full  rounded-md m-2 mb-3 flex pt-2 pb-2 pl-2 shadow-xl mr-3.5">
+            <div className="w-full h-full">
               <>
-                <img
-                  src={`http://localhost:4000/exercises/${selectedExercise[0].exercise._id}/image`}
-                  alt="exercise"
-                  className="h-full w-[40%] object-cover rounded-sm"
-                />
-
-                <div className="w-full flex flex-col justify-center">
-                  <p className="text-center light-text text-base xl:text-base mb-1 tracking-wider">
-                    {selectedExercise[0].exercise.name}
-                  </p>
-                  <div className="flex flex-col items-center overflow-auto custom-scrollbar">
-                    {selectedExercise[0].sets.length > 0 && (
-                      <p className="light-text">Sets</p>
-                    )}
-                    <div className="flex space-x-3 w-full justify-center items-center flex-wrap px-3">
-                      {selectedExercise[0].sets.length > 0 &&
-                        selectedExercise[0].sets.map((set) => (
-                          <div
-                            onClick={handleSetClick}
-                            key={set.id}
-                            data-id={set.id}
-                            className="flex space-x-1 w-auto justify-center"
-                          >
-                            <p className="text-blue-400">{set.reps}</p>{' '}
+                <HiArrowUturnLeft
+                  className="fixed top-3 right-3 light-text cursor-pointer"
+                  onClick={() => setWorkoutModal(!workoutModal)}
+                ></HiArrowUturnLeft>
+                <p className="text-center text-2xl light-text mb-[5%] tracking-wider">
+                  {selectedExercise[0].exercise.name}
+                </p>
+                <div className="flex w-full justify-center">
+                  <img
+                    src={`http://localhost:4000/exercises/${selectedExercise[0].exercise._id}/image`}
+                    alt="exercise"
+                    className="h-full w-full max-w-[23rem] object-cover rounded-lg"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <ul className="flex w-full justify-center pt-[6%] space-x-6">
+                    {selectedExercise[0].sets.length > 0 &&
+                      selectedExercise[0].sets.map((set, index) => (
+                        <li
+                          key={set.id}
+                          data-id={set.id}
+                          onClick={(e) => {
+                            handleSetClick(e)
+                          }}
+                          className="flex space-x-1 w-auto justify-center"
+                        >
+                          <h1 className="light-text">Set {index + 1}</h1>
+                          <div className="flex space-x-1">
+                            <p className="text-blue-400">{set.reps}</p>
                             <p className="text-red-600">{set.weight}</p>
-                            {set.weight && <p className="light-text">KG</p>}
+                            <p className="light-text">KG</p>
                           </div>
-                        ))}
-                    </div>
-                    {selectedSet.length > 0 && (
-                      <form
-                        className="flex flex-col space-y-2 mt-3 items-center"
-                        onSubmit={handleSubmit}
-                      >
-                        <div className="space-x-1 flex justify-center">
+                        </li>
+                      ))}
+                  </ul>
+                  {selectedSet.length > 0 && (
+                    <form
+                      onSubmit={handleSubmit}
+                      className="flex flex-col justify-center p-2 light-text"
+                    >
+                      <div className="flex justify-center space-x-2">
+                        <div className="flex flex-col items-center space-y-1">
+                          <label>Reps</label>
                           <input
-                            className="w-[14%] text-center rounded-sm"
                             type="number"
+                            min="0"
                             value={repsInput}
                             onChange={(e) =>
                               setRepsInput(Number(e.target.value))
                             }
+                            className="w-10 rounded-md text-center text-black"
                           />
+                        </div>
+                        <div className="flex flex-col items-center space-y-1">
+                          <label>Weight</label>
                           <input
-                            className="w-[14%] text-center rounded-sm"
                             type="number"
+                            min="0"
                             value={weightInput}
                             onChange={(e) =>
                               setWeightInput(Number(e.target.value))
                             }
+                            className="w-10 rounded-md text-center  text-black"
                           />
                         </div>
+                      </div>
+                      <div className="w-full flex justify-center">
                         <button
                           type="submit"
-                          className="bg-green-600 w-[20%] rounded-md"
+                          className="mt-6 bg-green-600 px-2 py-1 rounded-md text-black"
                         >
                           Confirm
                         </button>
-                      </form>
-                    )}
-                  </div>
+                      </div>
+                    </form>
+                  )}
                 </div>
               </>
             </div>

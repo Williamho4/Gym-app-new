@@ -1,6 +1,9 @@
 import { v4 as uuidv4 } from 'uuid'
+import { useNavigate } from 'react-router-dom'
 
 function WeeklySessions({ workouts }) {
+  const Navigate = useNavigate()
+
   const today = new Date()
   const currentDay = today.getDay() // 0 (Sun) to 6 (Sat)
 
@@ -57,7 +60,12 @@ function WeeklySessions({ workouts }) {
             key={workout.id}
             className="main-color border-jetBlack border-[1px] rounded-md shadow-xl flex flex-col items-center p-4 pb-6 px-4 overflow-auto h-auto min-h-[15rem]"
           >
-            <h1 className="text-2xl mb-3">{workout.day}</h1>
+            <h1
+              className="text-2xl mb-3 cursor-pointer"
+              onClick={() => Navigate(`/workout?id=${workout.id}`)}
+            >
+              {workout.day}
+            </h1>
             <div className="flex flex-wrap gap-5 justify-center w-full">
               <ul className="w-full  mt-3 flex flex-wrap overflow-auto justify-center custom-scrollbar">
                 {workout.plannedExercises.map((exercise) => (
@@ -87,11 +95,9 @@ function WeeklySessions({ workouts }) {
                                   key={set.id}
                                   className="flex space-x-1 w-auto justify-center"
                                 >
-                                  <p className="text-blue-400">{set.reps}</p>{' '}
+                                  <p className="text-blue-400">{set.reps}</p>
                                   <p className="text-red-600">{set.weight}</p>
-                                  {set.weight && (
-                                    <p className="light-text">KG</p>
-                                  )}
+                                  <p className="light-text">KG</p>
                                 </div>
                               ))}
                           </div>

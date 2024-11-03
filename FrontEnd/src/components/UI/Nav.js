@@ -10,6 +10,7 @@ const NavLinks = () => {
     <>
       <NavLink to="/">Home</NavLink>
       <NavLink to="/workoutPlanner">Workout Planner</NavLink>
+      <NavLink to="/workouts">Workouts</NavLink>
       {!loggedIn ? (
         <NavLink to="/login">Login</NavLink>
       ) : (

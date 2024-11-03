@@ -5,6 +5,7 @@ import HomePage from './components/Pages/HomePage'
 import InputPage from './components/Pages/InputPage'
 import Login from './components/Login'
 import WorkoutPage from './components/Pages/WorkoutPage'
+import SearchWorkoutPage from './components/Pages/SearchWorkoutPage'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/workoutPlanner" element={<InputPage />} />
+        <Route path="/workouts" element={<SearchWorkoutPage />} />
         <Route path="/workout" element={<WorkoutPage />} />
         <Route path="*" element={<HomePage />} />
       </Routes>

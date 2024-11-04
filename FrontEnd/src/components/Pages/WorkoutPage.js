@@ -178,7 +178,7 @@ function WorkoutPage() {
                           onClick={(e) => {
                             handleSetClick(e)
                           }}
-                          className="flex space-x-1 w-auto justify-center"
+                          className="flex space-x-1 w-auto justify-center cursor-pointer"
                         >
                           <h1 className="light-text">Set {index + 1}</h1>
                           <div className="flex space-x-1">

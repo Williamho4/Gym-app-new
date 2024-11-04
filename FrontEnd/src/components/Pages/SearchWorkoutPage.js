@@ -33,7 +33,7 @@ function SearchWorkoutPage() {
                 <li
                   key={exercise.id}
                   data-id={exercise.id}
-                  className="secondary-color h-[10rem] w-[90%] lg:w-[42%] xl:w-[42%] rounded-md m-2 mb-3 flex pt-2 pb-2 pl-2 shadow-xl mr-3.5 cursor-pointer"
+                  className="secondary-color h-[10rem] w-[90%] lg:w-[42%] xl:w-[42%] rounded-md m-2 mb-3 flex pt-2 pb-2 pl-2 shadow-xl mr-3.5"
                 >
                   <>
                     <img

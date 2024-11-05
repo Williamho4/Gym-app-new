@@ -119,7 +119,7 @@ function Input() {
           <li
             key={exercise._id}
             className={`secondary-color h-[5rem] w-[42%] md:w-[44%] xl:w-[46%] rounded-md m-2 mb-3 flex pt-2 pb-2 pl-2 shadow-xl cursor-pointer ${
-              selectedExercise?.name === exercise.name && 'bg-red-600'
+              selectedExercise?.name === exercise.name && 'bg-green-600'
             }`}
             onClick={() => handleSelect(exercise)}
           >
@@ -155,7 +155,7 @@ function Input() {
                     onChange={handleChange}
                   />
                   <button
-                    className="bg-blue-400 px-2 py-1 rounded-md"
+                    className="bg-green-600 light-text px-2 py-1 rounded-md"
                     type="submit"
                   >
                     Confirm

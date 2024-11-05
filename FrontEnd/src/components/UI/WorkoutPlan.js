@@ -113,7 +113,10 @@ function WorkoutPlan() {
             className="px-1 rounded-md p-1"
             onChange={(e) => setDate(e.target.value)}
           />
-          <button className="bg-blue-400 rounded-md text-lg p-1" type="submit">
+          <button
+            className="bg-green-600 light-text rounded-md text-lg p-1 px-2"
+            type="submit"
+          >
             Confirm Workout
           </button>
         </form>

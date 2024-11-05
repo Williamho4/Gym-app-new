@@ -9,7 +9,7 @@ const NavLinks = () => {
   return (
     <>
       <NavLink to="/">Home</NavLink>
-      <NavLink to="/workoutPlanner">Workout Planner</NavLink>
+      <NavLink to="/workoutPlanner">Planner</NavLink>
       <NavLink to="/workouts">Workouts</NavLink>
       {!loggedIn ? (
         <NavLink to="/login">Login</NavLink>
@@ -44,7 +44,7 @@ const Nav = () => {
   return (
     <>
       <nav className="w-1/5 light-text">
-        <div className="hidden lg:flex w-full justify-end space-x-5">
+        <div className="hidden lg:flex w-full justify-end items-center space-x-5">
           <NavLinks></NavLinks>
         </div>
         <div className="lg:hidden flex justify-end">

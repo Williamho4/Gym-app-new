@@ -3,6 +3,7 @@ import { useExercises } from '../../context/ExercisesContext'
 import { useUser } from '../../context/UserContext'
 import { useEffect, useState } from 'react'
 import { X } from 'lucide-react'
+import Stats from '../UI/Stats'
 
 function WorkoutPage() {
   const [searchParams] = useSearchParams()
@@ -90,7 +91,7 @@ function WorkoutPage() {
 
   return (
     <>
-      <section className="flex items-center justify-center min-h-[calc(100vh-4rem)] mt-2 md:mt-0">
+      <section className="md:mx-10 flex flex-col md:flex-row items-center justify-center min-h-[calc(100vh-4rem)] mt-2 md:mt-0">
         <div className="main-color w-[90%] md:w-[80%] lg:w-[70%] xl:w-[55%] min-h-[30rem] max-h-[50rem] rounded-md flex flex-col items-center justify-center p-4 shadow-xl">
           <h1 className="flex space-x-2 text-2xl">
             <p>{selectedWorkout[0]?.date}</p>
@@ -138,6 +139,9 @@ function WorkoutPage() {
             ))}
           </ul>
         </div>
+        <div className="w-[90%] max-w-[30rem] h-[12rem] m-5">
+          <Stats></Stats>
+        </div>
       </section>
       {workoutModal && (
         <div
@@ -148,7 +152,7 @@ function WorkoutPage() {
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className={`secondary-color rounded-xl shadow p-6 transition-all mx-2 ${
+            className={`secondary-color rounded-xl shadow p-6 transition-all mx-2 lg:mr-[50%] xl:mr-[30%] ${
               workoutModal ? 'scale-100' : 'scale-125 opacity-0'
             }`}
           >

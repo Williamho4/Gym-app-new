@@ -13,7 +13,7 @@ function HomePage() {
           <ExerciseDashboard workouts={userSavedWorkouts} />
         </section>
       ) : (
-        <h1 className="text-center mt-[26rem] text-3xl">LOADING...</h1>
+        <h1 className="text-center mt-[26rem] text-3xl">Please Log In</h1>
       )}
     </>
   )
